@@ -1,0 +1,66 @@
+#include "servo.h"
+#include "usart.h"
+#include "usart2.h"
+#include "string.h"
+#include "timer.h"
+//数字舵机，顺时针最左0.6ms 最右2.7ms，PWM频率50HZ
+
+
+//初始化舵机的角度，1.6ms的脉宽
+void Servo_Init(void)
+{
+	u16 compare_value=165;
+	TIM3_PWM_Init(2000,720);  //72M/720=100KHz/50=2000  PWM频率为50Hz,每2000为20ms
+	TIM_SetCompare2(TIM3,compare_value);	
+}
+
+//从串口接收的缓冲数组中查找指定的字符串
+char * Data_Analysis(u8 USARTx_RX_STA ,char *buff, char *searchstr)
+{
+	char * ret=	NULL;
+	if((USARTx_RX_STA&(1<<15))!=0)
+	{
+		printf("%s\r\n",USART2_RX_BUF);
+		ret=strstr(buff,searchstr);
+	}
+	return ret;
+}
+
+//解析串口指令，控制舵机旋转
+//compare_value :占空比比较值
+void Rotate(void)  
+{
+	u16 compare_value=165;
+	u8 state=0;
+	if(Data_Analysis(USART2_RX_STA,(char *)USART2_RX_BUF,"instruction:")!=0)
+	{
+		if(strstr((char *)USART2_RX_BUF,"stop"))
+			state= 1;
+		if(strstr((char *)USART2_RX_BUF,"left"))
+			state= 2;
+		if(strstr((char *)USART2_RX_BUF,"right"))
+			state= 3;
+			Data_clean();                  //清除数据
+	switch(state)
+	{
+		case 0:break;
+		case 1:if(compare_value<270) compare_value+=10;break;
+		case 2:if(compare_value>60 ) compare_value-=10;break;
+		default:break;
+	}
+	TIM_SetCompare2(TIM3,compare_value);
+	}
+	
+}
+
+
+void Data_clean(void)
+{
+	u8 i=0;
+	for(i=0;i<=USART2_REC_LEN;i++)
+	{
+		USART2_RX_BUF[i]=0;
+	}
+	USART2_RX_STA=0;
+}
+
