@@ -23,9 +23,4 @@ int main(void)
     {
 		Rotate();
     }
-	ESP8266_Resatart();
-	while(1)
-	{
-		;
-	}
 }

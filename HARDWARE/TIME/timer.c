@@ -8,15 +8,15 @@ void TIM3_PWM_Init(u16 arr ,u16 psc )
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3,ENABLE);  //开启定时器3时钟
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE); //GPIOB时钟使能
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE); //GPIOC时钟使能
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE); //端口复用时钟使能
 	
-	GPIO_PinRemapConfig(GPIO_PartialRemap_TIM3,ENABLE); //使能TIM3的部分重映射
+	GPIO_PinRemapConfig(GPIO_FullRemap_TIM3,ENABLE); //使能TIM3的部分重映射
 	
 	GPIO_InitStucture.GPIO_Mode=GPIO_Mode_AF_PP; //推挽复用输出
-	GPIO_InitStucture.GPIO_Pin=GPIO_Pin_5;
+	GPIO_InitStucture.GPIO_Pin=GPIO_Pin_6 | GPIO_Pin_7;
 	GPIO_InitStucture.GPIO_Speed=GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB,&GPIO_InitStucture);      //使能GPIOB
+	GPIO_Init(GPIOC,&GPIO_InitStucture);      //使能GPIOB
 	
 	TIM_TimeBaseStructure.TIM_Period = arr; //设置在自动重装载周期值
 	TIM_TimeBaseStructure.TIM_Prescaler =psc; //设置预分频值
@@ -27,9 +27,13 @@ void TIM3_PWM_Init(u16 arr ,u16 psc )
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; //选择 PWM 模式 1
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; //比较输出使能
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; //输出极性高
-	TIM_OC2Init(TIM3, &TIM_OCInitStructure); 
 	
-	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable); //使能预装载寄存器
+	TIM_OC2Init(TIM3, &TIM_OCInitStructure); 
+	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
+	
+	
+	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
+	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable); //使能通道2的预装载寄存器
 	TIM_Cmd(TIM3, ENABLE);                            //使能 TIM3
 	
 }

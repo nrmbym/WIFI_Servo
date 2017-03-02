@@ -139,7 +139,6 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>f饙wゎ?</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -171,18 +170,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>77</LineNumber>
+          <LineNumber>80</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134243178</Address>
+          <Address>134244304</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>E:\椤圭洰\鑷姩璺熼殢灏忚溅\绋嬪簭\Servo_V1\HARDWARE\TIME\timer.c</Filename>
+          <Filename>E:\椤圭洰\鑷姩璺熼殢灏忚溅\绋嬪簭\WIFI_Servo\HARDWARE\USART2\usart2.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Template\../HARDWARE/TIME/timer.c\77</Expression>
+          <Expression>\\Template\../HARDWARE/USART2/usart2.c\80</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -225,6 +224,21 @@
           <count>7</count>
           <WinNumber>1</WinNumber>
           <ItemText>a</ItemText>
+        </Ww>
+        <Ww>
+          <count>8</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>USART2_RX_BUF</ItemText>
+        </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>compare1_value</ItemText>
+        </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>compare2_value</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
